@@ -5,7 +5,8 @@ pipeline {
             steps {
                 sh '''
                 ssh -i ~/.ssh/id_rsa jenkins@10.154.0.45 << EOF
-                docker rm -f $(docker ps -qa) || true
+                docker stop flask-app || echo "flask-app not running"
+                docker rm flask-app || echo "flask-app not running"
                 '''
            }
         }
@@ -28,7 +29,7 @@ pipeline {
             steps {
                 sh '''
                 ssh -i ~/.ssh/id_rsa jenkins@10.154.0.45 << EOF
-                docker run -d -p 80:8080 --name python-api beth111/python-api
+                docker run -d -p 80:8080 --name flask-app beth111/python-api
                 '''
             }
         }
