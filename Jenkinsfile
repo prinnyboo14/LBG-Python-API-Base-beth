@@ -33,7 +33,7 @@ pipeline {
                 '''
             }
         }
-        stage('Build') {
+        stage('CleanUp') {
             steps {
                 sh '''
                 docker system prune -f
