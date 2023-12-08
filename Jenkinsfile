@@ -5,8 +5,7 @@ pipeline {
             steps {
                 sh '''
                 ssh -i ~/.ssh/id_rsa jenkins@10.154.0.45 << EOF
-                docker stop flask-app || echo "flask-app not running"
-                docker rm flask-app || echo "flask-app not running"
+                docker rm -f $(docker ps -qa) || true
                 '''
            }
         }
@@ -33,7 +32,7 @@ pipeline {
                 '''
             }
         }
-        stage('Build') {
+        stage('CleanUp') {
             steps {
                 sh '''
                 docker system prune -f
